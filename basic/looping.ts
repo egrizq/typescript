@@ -23,3 +23,15 @@ enterData.forEach((item) => {
 enterData.map((one) => {
     console.log("loop with map:", one)
 })
+
+// todo while
+let game:boolean = true
+let counter:number = 1
+do {
+    if (counter <= 3) {
+        console.log("test", counter)
+        counter++
+    } else {
+        game = false
+    }
+} while (game)

@@ -1,4 +1,4 @@
-// todo group a data like an object
+// todo define an interface for data object
 interface Data {
     place: string;
     population: number;

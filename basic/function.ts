@@ -15,3 +15,9 @@ function multiple(x: number, y:number, z?:number): number {
 console.log(myName("rizq", 24))
 console.log(addition(10,12))
 console.log(multiple(10, 12))
+
+// void mean the func didn't return anything
+function vodito():void {
+    console.log("bebas aja")
+}
+vodito()
