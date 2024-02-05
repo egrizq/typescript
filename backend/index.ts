@@ -14,7 +14,7 @@ const pool = mysql.createPool({
     database: "flask"
 });
 
-app.get("/data", (req: Request, res: Response) => {
+app.get("/", (req: Request, res: Response) => {
     pool.query('SELECT * FROM data', (err: any, rows: any) => {
         if (err) {
             console.log(err)
@@ -25,15 +25,22 @@ app.get("/data", (req: Request, res: Response) => {
     });
 })
 
-app.post("/", (req: Request, res: Response) => {
-    const {username, password} = req.body;
-    console.log("data:", username, password)
-    
-    const response = {
-        messsage: `my name is ${username} & my password is ${password}`
+app.post("/register", (req: Request, res: Response) => {
+    const {fullname, username, password} = req.body;
+    const data = `username: ${username}, password: ${password}, fullname: ${fullname}`;
+
+    if (username === "" || password === "" || fullname === "") {
+        return res.status(400).send("some data has missing")
     }
 
-    res.status(200).send(response);
+    pool.query("INSERT INTO data(fullname, username, password) VALUES (?, ?, ?)", [fullname, username, password], 
+    (err, rows) => {
+        if (err) {
+            console.log(err)
+            return res.status(500).send("error updating data")
+        }
+        res.status(200).send(data);
+    })
 });
 
 app.delete("/delete/:id", (req: Request, res: Response) => {
@@ -67,10 +74,6 @@ app.put("/update/:id", (req: Request, res: Response) => {
     })
 
 })
-
-app.get("/", (req: Request, res: Response) => {
-    res.send("hello first tsc with express")
-});
 
 app.listen(port, () => {
     console.log("server run on port:8000")
