@@ -28,6 +28,7 @@ function dataRequest(req: Request, res: Response, next: NextFunction) {
     next()
 }
 
+// route with middleware
 app.post("/register", dataRequest, (req: Request, res: Response) => {
     // get the data from middleware
     const {fullname, username, password} = req.res?.locals.data
