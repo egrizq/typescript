@@ -6,8 +6,8 @@ async function insertUsers(client:MongoClient, name:string, age:number): Promise
     try {
         const db = client.db("firstDB");
         const collection = db.collection("data");
-
         const users = await collection.insertOne({ name, age })
+
         return users;
     } catch (error) {
         console.log(error);
@@ -23,7 +23,8 @@ async function main(name:string, age:number) {
         console.log('Users has been inserted:', users)
         await client.close()
     } catch (error) {
-        console.log(error)
+        console.log(error);
+        throw error;
     }
 }
 
