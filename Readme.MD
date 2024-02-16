@@ -10,6 +10,3 @@
 1. Open terminal type tsc --init 
 2. to run typescript -> ts-node filename.ts
 
-### Check basic/ds
-- there's a leetcode with typecript
-
