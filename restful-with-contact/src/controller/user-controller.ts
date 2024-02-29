@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { CreateUserRequest, LoginUserRequest, UpdateUserRequest } from "../model/user-model";
 import { UserService } from "../service/user-service";
 import { UserRequest } from "../type/user-request";
+import { log } from 'winston';
 
 export class UserController {
 
@@ -46,6 +47,17 @@ export class UserController {
             const response = await UserService.update(req.user!, request);
             res.status(200).json({
                 data: response
+            })
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    static async logout(req: UserRequest, res: Response, next: NextFunction) {
+        try {
+            await UserService.logout(req.user!);
+            res.status(200).json({
+                data: "ok"
             })
         } catch (e) {
             next(e)
