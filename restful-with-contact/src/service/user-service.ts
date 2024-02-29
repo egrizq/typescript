@@ -1,9 +1,11 @@
+import { log } from "winston";
 import { prismaClient } from "../application/database";
 import { ResponseError } from "../error/response-error";
-import { CreateUserRequest, UserResponse, toUserResponse } from "../model/user-model";
+import { CreateUserRequest, UserResponse, toUserResponse, LoginUserRequest } from "../model/user-model";
 import { UserValidation } from "../validation/user-validation";
 import { Validation } from '../validation/validation';
 import bcrypt from "bcrypt";
+import { v4 as uuid } from "uuid";
 
 export class UserService {
 
@@ -27,5 +29,37 @@ export class UserService {
         });
 
         return toUserResponse(user);
+    }
+
+    static async login(request: LoginUserRequest): Promise<UserResponse> {
+        const loginRequest = Validation.validate(UserValidation.LOGIN, request);
+
+        let user = await prismaClient.user.findUnique({
+            where: {
+                username: loginRequest.username
+            }
+        });
+
+        if (!user) {
+            throw new ResponseError(401, "username or password error");
+        }
+
+        const isPasswordValid = await bcrypt.compare(loginRequest.password, user.password)
+        if (!isPasswordValid) {
+            throw new ResponseError(401, "username or password error");
+        }
+
+        user = await prismaClient.user.update({
+            where: {
+                username: loginRequest.username
+            },
+            data: {
+                token: uuid()
+            }
+        })
+
+        const response = toUserResponse(user);
+        response.token = user.token!;
+        return response;
     }
 }
