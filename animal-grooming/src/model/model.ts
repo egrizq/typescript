@@ -14,10 +14,12 @@ export type RequestUser = {
 
 export type ResponseUser = {
     owner: string;
-    phone: string;
-    address: string;
+    phone: string; 
 }
 
-export function ReturnUser(data: ResponseUser) {
-    return data
+export function returnUser(data: ResponseUser) {
+    return {
+        owner: data.owner,
+        phone: data.phone
+    }
 }

@@ -1,26 +1,30 @@
 import { prismaClient } from '../database/connectDB';
-import { RequestUser, ResponseUser, ReturnUser } from '../model/model';
+import { RequestUser, ResponseUser, returnUser } from '../model/model';
+import { UserValidate } from '../validators/user';
+import { Validator } from '../validators/validate';
 
 export class User {
 
     static async create(user: RequestUser): Promise<ResponseUser> {
+        const validate = Validator.request(UserValidate.REGISTER, user)
+        
         const checkOwner = await prismaClient.user.findMany({
             where: {
-                owner: user.owner
+                owner: validate.owner
             }
         })
 
         if (checkOwner.length !== 0) {
             throw new Error('Owner already exist!')
         }
-        
+
         const response = await prismaClient.user.create({
             data: {
-                owner: user.owner,
-                phone: user.phone,
-                address: user.address,
+                owner: validate.owner,
+                phone: validate.phone,
+                address: validate.address,
                 animals: {
-                    create: user.animals.map(animal => ({
+                    create: validate.animals.map(animal => ({
                         name: animal.name,
                         age: animal.age,
                         color: animal.color,
@@ -33,6 +37,6 @@ export class User {
             }
         })
 
-        return ReturnUser(response)
+        return returnUser(response)
     }
 }
