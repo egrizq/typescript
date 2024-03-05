@@ -1,4 +1,5 @@
 import { prismaClient } from '../database/connectDB';
+import { ResponseError } from '../middleware/error';
 import { RequestUser, ResponseUser, returnUser } from '../model/model';
 import { UserValidate } from '../validators/user';
 import { Validator } from '../validators/validate';
@@ -15,7 +16,7 @@ export class User {
         })
 
         if (checkOwner.length !== 0) {
-            throw new Error('Owner already exist!')
+            throw new ResponseError(400, "Owner already exist!")
         }
 
         const response = await prismaClient.user.create({
