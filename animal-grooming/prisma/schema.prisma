@@ -40,7 +40,6 @@ model Animal {
 model Admin {
     username String @id @db.VarChar(100)
     password String @db.VarChar(100)
-    token String? @db.VarChar(100)
 
     @@map("admin")
 }

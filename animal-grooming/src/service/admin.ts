@@ -48,15 +48,6 @@ export class Admin {
             throw new ResponseError(401, "Username or password is wrong!")
         }
 
-        user = await prismaClient.admin.update({
-            where: {
-                username: user.username
-            },
-            data: {
-                token: uuid()
-            }
-        })
-
         return "Login success!"
     }
 }

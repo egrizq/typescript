@@ -4,5 +4,5 @@ import { errorMiddleware } from '../middleware/error';
 
 export const app = express();
 app.use(express.json());
-app.use(router);
-app.use(errorMiddleware);
+app.use(router); 
+app.use(errorMiddleware); // error handling 
