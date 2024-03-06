@@ -20,16 +20,29 @@ export class AdminController {
     static async login(req: Request, res: Response, next: NextFunction) {
         try {
             const requestAdmin: BodyAdmin = req.body as BodyAdmin
-            const response = await Admin.login(requestAdmin)
+            const _ = await Admin.login(requestAdmin)
             
             const jwtToken = jwt.sign(
                 { admin: "admin" },
                 "secret-key",
             ) 
             res.cookie('jwt', jwtToken, {httpOnly:true})
-            res.send({ message: 'Token generated successfully' });
+            res.send({ 
+                message: 'Token generated successfully' 
+            });
         } catch (error) {
             next(error)
         }
     };
+
+    static async logout(req: Request, res: Response, next: NextFunction) {
+        try {
+            res.clearCookie("jwt");
+            res.send({
+                message: "Success logout!"
+            })
+        } catch (error) {
+            next(error)
+        }
+    }
 }

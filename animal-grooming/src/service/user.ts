@@ -40,4 +40,5 @@ export class User {
 
         return returnUser(response)
     }
+
 }
