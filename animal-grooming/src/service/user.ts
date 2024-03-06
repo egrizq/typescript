@@ -1,5 +1,5 @@
 import { prismaClient } from '../database/connectDB';
-import { ResponseError } from '../middleware/error';
+import { ResponseError } from '../helper/errorInstance';
 import { RequestUser, ResponseUser, returnUser } from '../model/model';
 import { UserValidate } from '../validators/user';
 import { Validator } from '../validators/validate';

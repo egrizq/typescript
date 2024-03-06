@@ -1,26 +1,31 @@
 ## animal grooming.
 
-### Register animal.
-endpoint: POST /animal/register
+### Register user & animal.
+endpoint: POST /create/user
 
 request body:
 
 ```json
 {
-    "name": "snowbell",
-    "age": "2",
-    "color": "white",
-    "kind": "cat",
-    "phone": "0811",
-    "owner": "rizq", // unique
+    "owner": "rizq",
+    "phone": "081122",
+    "address": "jkt",
+    "animals": [
+        {
+            "name": "sblasd",
+            "age": "2",
+            "color": "white",
+            "kind": "cat"
+        }
+    ]
 }
 ```
 
 response body(success):
 ```json
 {
-    "name": "snowbell",
-    "owner": "rizq", // unique
+    "name": "rizq",
+    "phone": "0811",
 }
 ```
 
@@ -70,7 +75,7 @@ request body:
     "age": "1",
     "color": "black",
     "kind": "dog",
-    "phone": "0822",
+    "phone": "0822", 
 }
 ```
  
