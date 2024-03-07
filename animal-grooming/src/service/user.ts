@@ -1,6 +1,6 @@
 import { prismaClient } from '../database/connectDB';
 import { ResponseError } from '../helper/errorInstance';
-import { RequestUser, ResponseUser, returnUser } from '../model/model';
+import { AddAnimal, RequestUser, ResponseUser, returnAnimal, returnUser } from '../model/user';
 import { UserValidate } from '../validators/user';
 import { Validator } from '../validators/validate';
 
@@ -39,6 +39,32 @@ export class User {
         })
 
         return returnUser(response)
+    }
+
+    static async addAnimal(user: AddAnimal): Promise<AddAnimal> {
+        const validate = Validator.request(UserValidate.ADD_ANIMAL, user)
+
+        const checkOwner = await prismaClient.user.findFirst({
+            where: {
+                owner: validate.owner
+            }
+        })
+
+        if (!checkOwner) {
+            throw new ResponseError(400, "Owner is not found");
+        }
+
+        const addAnimal = await prismaClient.animal.create({
+            data: {
+                name: validate.name,
+                age: validate.age,
+                color: validate.color,
+                kind: validate.kind,
+                user_id: checkOwner.user_id
+            } 
+        })
+
+        return returnAnimal(validate)
     }
 
 }

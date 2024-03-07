@@ -15,7 +15,7 @@ datasource db {
 
 model User {
     user_id Int @id @default(autoincrement())
-    owner String @db.VarChar(100) 
+    owner String @db.VarChar(100) @unique
     phone String @db.VarChar(100)
     address String @db.VarChar(100)
     

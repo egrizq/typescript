@@ -6,4 +6,5 @@ export const router = express.Router()
 router.use(AuthMiddleware)
 
 // user & animal section
-router.post("/user/create", UserController.register);
+router.post("/user/register", UserController.register);
+router.post("/user/register/animal", UserController.registerNewAnimal);

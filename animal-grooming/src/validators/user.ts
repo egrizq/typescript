@@ -16,4 +16,12 @@ export class UserValidate {
         )
     })
 
+    static readonly ADD_ANIMAL: ZodType = z.object({
+        owner: z.string().min(1).max(100),
+        name: z.string().min(1).max(100),
+        age: z.string().min(1).max(10),
+        color: z.string().min(1).max(10),
+        kind: z.string().min(1).max(100)
+    })
+
 }

@@ -23,3 +23,21 @@ export function returnUser(data: ResponseUser) {
         phone: data.phone
     }
 }
+
+export type AddAnimal = {
+    owner: string;
+    name: string;
+    age: string;
+    color: string;
+    kind: string;
+}
+
+export function returnAnimal(data: AddAnimal) {
+    return {
+        owner: data.owner,
+        name: data.name,
+        age: data.age,
+        color: data.color,
+        kind: data.kind
+    }
+}
