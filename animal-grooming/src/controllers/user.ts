@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { User } from "../service/user";
 import { AddAnimal, RequestUser } from "../model/user";
-import { Requestgrooming, responseGrooming } from '../model/grooming';
+import { RequestGrooming, responseGrooming } from '../model/grooming';
 import { Grooming } from "../service/grooming";
 
 export class UserController {
@@ -32,7 +32,7 @@ export class UserController {
 
     static async registerGrooming(req: Request, res: Response, next: NextFunction) {
         try {
-            const response: Requestgrooming = req.body as Requestgrooming
+            const response: RequestGrooming = req.body as RequestGrooming
             const grooming = await Grooming.register(response)
             res.status(200).json({
                 data: grooming
@@ -41,4 +41,5 @@ export class UserController {
             next(error)
         }
     }
+
 }

@@ -1,12 +1,12 @@
 import { prismaClient } from "../database/connectDB";
 import { ResponseError } from "../helper/errorInstance";
-import { Requestgrooming, responseGrooming } from "../model/grooming";
+import { RequestGrooming, responseGrooming } from "../model/grooming";
 import { GroomingValidate } from "../validators/grooming";
 import { Validator } from '../validators/validate';
 
 export class Grooming {
 
-    static async register(user: Requestgrooming): Promise<Requestgrooming> {
+    static async register(user: RequestGrooming): Promise<RequestGrooming> {
         const validate = Validator.request(GroomingValidate.REQUEST, user)
 
         const checkOwner = await prismaClient.user.findFirst({

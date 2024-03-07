@@ -1,6 +1,7 @@
 import { prismaClient } from "../database/connectDB";
 import { ResponseError } from "../helper/errorInstance";
 import { BodyAdmin } from "../model/admin";
+import { ResponseGrooming, returnResponseGrooming } from "../model/grooming";
 import { AdminValidate } from "../validators/admin";
 import { Validator } from "../validators/validate";
 import bcrypt from "bcrypt";
@@ -49,4 +50,16 @@ export class Admin {
 
         return "Login success!"
     }
+
+    static async grooming(): Promise<ResponseGrooming> {
+        const dataGrooming = await prismaClient.grooming.findMany()
+
+        let list: any[] = []
+        dataGrooming.forEach(data => {
+            list.push([data.name, data.owner, data.groomingType, data.date, data.queue])
+        })
+        
+        return returnResponseGrooming(list)
+    }
+
 }

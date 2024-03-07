@@ -47,4 +47,16 @@ export class AdminController {
             next(error)
         }
     }
+
+    static async groomingData(req: Request, res: Response, next: NextFunction) {
+        try {
+            const data = await Admin.grooming();
+            res.status(200).json({
+                data: data
+            })
+        } catch (error) {
+            next(error)
+        }
+    }
+
 }
