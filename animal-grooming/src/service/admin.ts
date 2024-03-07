@@ -4,12 +4,11 @@ import { BodyAdmin } from "../model/admin";
 import { AdminValidate } from "../validators/admin";
 import { Validator } from "../validators/validate";
 import bcrypt from "bcrypt";
-import { v4 as uuid } from 'uuid';
 
 export class Admin {
 
     static async create(admin: BodyAdmin): Promise<string> {
-        const validate = Validator.request(AdminValidate.REGISTER, admin)
+        const validate = Validator.request(AdminValidate.REQUEST, admin)
 
         const checkUsername = await prismaClient.admin.findMany({
             where: {
@@ -31,7 +30,7 @@ export class Admin {
     }
 
     static async login(admin: BodyAdmin): Promise<string> {
-        const validate = Validator.request(AdminValidate.REGISTER, admin)
+        const validate = Validator.request(AdminValidate.REQUEST, admin)
 
         let user = await prismaClient.admin.findUnique({
             where: {

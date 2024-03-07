@@ -13,13 +13,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Admin {
+    username String @id @db.VarChar(100)
+    password String @db.VarChar(100)
+
+    @@map("admin")
+}
+
 model User {
     user_id Int @id @default(autoincrement())
     owner String @db.VarChar(100) @unique
     phone String @db.VarChar(100)
     address String @db.VarChar(100)
     
-    animals Animal[] 
+    animals Animal[]
+    grooming Grooming[] 
 
     @@map("user")
 }
@@ -37,9 +45,17 @@ model Animal {
     @@map("animal")
 }
 
-model Admin {
-    username String @id @db.VarChar(100)
-    password String @db.VarChar(100)
+model Grooming {
+    id Int @id @default(autoincrement())
+    owner String @db.VarChar(100)
+    name String @db.VarChar(100)
+    groomingType String @db.VarChar(100)
+    date DateTime @default(now())
+    queue Int
+    
+    user_id Int 
 
-    @@map("admin")
+    user_relation User @relation(fields: [user_id], references: [user_id])
+
+    @@map("grooming")
 }

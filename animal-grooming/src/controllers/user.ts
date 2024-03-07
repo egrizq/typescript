@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { User } from "../service/user";
 import { AddAnimal, RequestUser } from "../model/user";
+import { Requestgrooming, responseGrooming } from '../model/grooming';
+import { Grooming } from "../service/grooming";
 
 export class UserController {
     
@@ -23,6 +25,18 @@ export class UserController {
             res.status(200).json({
                 data: createNewAnimal
             }) 
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    static async registerGrooming(req: Request, res: Response, next: NextFunction) {
+        try {
+            const response: Requestgrooming = req.body as Requestgrooming
+            const grooming = await Grooming.register(response)
+            res.status(200).json({
+                data: grooming
+            })
         } catch (error) {
             next(error)
         }
