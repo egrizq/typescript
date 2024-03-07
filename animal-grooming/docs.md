@@ -1,7 +1,9 @@
-## animal grooming.
+## RESTful API Animal Grooming.
 
 ### Register user & animal.
-endpoint: POST /create/user
+endpoint: POST /user/register
+
+request: jwt-token
 
 request body:
 
@@ -9,10 +11,10 @@ request body:
 {
     "owner": "rizq",
     "phone": "081122",
-    "address": "jkt",
+    "address": "bekasi",
     "animals": [
         {
-            "name": "sblasd",
+            "name": "snowbell",
             "age": "2",
             "color": "white",
             "kind": "cat"
@@ -24,8 +26,10 @@ request body:
 response body(success):
 ```json
 {
-    "name": "rizq",
-    "phone": "0811",
+    "data": {
+        "name": "rizq",
+        "phone": "0811",
+    }
 }
 ```
 
@@ -36,57 +40,32 @@ response body(failed):
 }
 ```
 
-### register grooming.
-endpoint: POST /animal/grooming
+### register new animal.
+endpoint: POST /user/register/animal
+
+request: jwt-token
 
 request body:
 ```json
 {
     "owner": "rizq", 
-    "type": "mandi kutu",
-}
-```
-
-response body(success):
-```json
-{
     "name": "snowbell",
-    "type": "mandi kutu",
-    "datetime": "22-01-2024",
-    "queue": "1"
+    "age": "2",
+    "color": "white",
+    "kind": "cat",
 }
 ```
 
-response body(failed):
-```json
-{
-    "errors": "errors name is not registered yet"
-}
-```
-
-### update animal.
-endpoint: PUT /animal/update/:owner
-
-request body: 
-```json
-{
-    "owner": "rizq",
-    "name": "alert",
-    "age": "1",
-    "color": "black",
-    "kind": "dog",
-    "phone": "0822", 
-}
-```
- 
 response body(success):
 ```json
 {
-    "name": "alert",
-    "age": "1",
-    "color": "black",
-    "kind": "dog",
-    "phone": "0822",
+    "data": {
+        "owner": "rizq", 
+        "name": "snowbell",
+        "age": "2",
+        "color": "white",
+        "kind": "cat",
+    }
 }
 ```
 
@@ -97,54 +76,120 @@ response body(failed):
 }
 ```
 
+### register for grooming.
+endpoint: POST /user/register/grooming
 
-### login admin
-endpoint: POST /login
+request: jwt-token
+
+request body:
+```json
+{
+    "owner": "rizq", 
+    "name": "snowbell",
+    "groomingType": "kutu"
+}
+```
+
+response body(success):
+```json
+{
+    "data": {
+        "owner": "rizq", 
+        "name": "snowbell",
+        "groomingType": "kutu",
+        "queue": 1
+    }
+}
+```
+
+response body(failed):
+```json
+{
+    "errors": "owner is not found"
+}
+```
+
+### register admin
+endpoint: POST /admin/create
 
 request body:
 ```json
 {
     "username": "admin",
     "password": "secret",
-    "token": "uuid",
 }
 ```
 
 response body(success):
 ```json
 {
-    "status": "login success"
+    "status": "Account successfully created!"
 }
 ```
 
 response body(failed):
 ```json
 {
-    "status": "username or password is not found"
+    "status": "Username already exist!"
 }
 ```
 
-### get all animal
-endpoint: GET /animal/data
+### login admin
+endpoint: POST /admin/login
 
-request header:
-- API-TOKEN: token
+request body:
+```json
+{
+    "username": "admin",
+    "password": "secret",
+}
+```
 
 response body(success):
 ```json
 {
-    "owner": "rizq",
-    "name": "alert",
-    "age": "1",
-    "color": "black",
-    "kind": "dog",
-    "phone": "0822",
+    "status": "Login success!"
 }
 ```
 
 response body(failed):
 ```json
 {
-    "errors": "authorized"
+    "status": "Username or password is wrong!"
 }
 ```
+
+### logout admin
+endpoint: GET /admin/logout
+
+response body(success):
+```json
+{
+    "status": "Success logout!"
+}
+```
+
+### get grooming data
+endpoint: GET /grooming/data
+
+request: jwt-token
+
+response body(success):
+```json
+{
+    "data": [
+    {
+        "owner": "rizq",
+        "name": "snowbell",
+        "groomingType": "kutu",
+        "date": "2024-03-07T03:05:25.109Z",
+        "queue": 1
+    }, {
+        "owner": "syra",
+        "name": "groot",
+        "groomingType": "kombinasi",
+        "date": "2024-03-07T03:05:25.109Z",
+        "queue": 2
+    }
+    ]
+}

@@ -33,7 +33,6 @@ export class Grooming {
                 queue: 'desc'
             }
         })
-
         const lastQueueNumber = lastGrooming ? lastGrooming.queue : 0;
         const newQueueNumber = lastQueueNumber + 1;
         
@@ -41,7 +40,7 @@ export class Grooming {
             throw new ResponseError(400, "Grooming type is not matching!")
         }
 
-        const  registerGrooming = await prismaClient.grooming.create({
+        const registerGrooming = await prismaClient.grooming.create({
             data: {
                 user_id: checkOwner.user_id,
                 owner: validate.owner,
@@ -50,6 +49,7 @@ export class Grooming {
                 queue: newQueueNumber,
             }
         })
+        validate.queue = registerGrooming.queue
 
         return responseGrooming(validate)
     }

@@ -51,12 +51,12 @@ export class Admin {
         return "Login success!"
     }
 
-    static async grooming(): Promise<ResponseGrooming> {
+    static async grooming(): Promise<ResponseGrooming[]> {
         const dataGrooming = await prismaClient.grooming.findMany()
 
         let list: any[] = []
         dataGrooming.forEach(data => {
-            list.push([data.name, data.owner, data.groomingType, data.date, data.queue])
+            list.push([data.owner, data.name, data.groomingType, data.date, data.queue])
         })
         
         return returnResponseGrooming(list)
