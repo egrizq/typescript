@@ -1,6 +1,6 @@
 import { prismaClient } from "../database/connectDB";
 import { ResponseError } from "../helper/errorInstance";
-import { RequestGrooming, responseGrooming } from "../model/grooming";
+import { RequestGrooming, ResponseGrooming, responseGrooming } from '../model/grooming';
 import { GroomingValidate } from "../validators/grooming";
 import { Validator } from '../validators/validate';
 
@@ -53,4 +53,19 @@ export class Grooming {
 
         return responseGrooming(validate)
     }
+
+    static async data(): Promise<ResponseGrooming[]> {
+        const dataGrooming = await prismaClient.grooming.findMany({
+            select: {
+                owner: true,
+                name: true,
+                groomingType: true,
+                date: true,
+                queue: true
+            }
+        })
+
+        return dataGrooming
+    }
+
 }

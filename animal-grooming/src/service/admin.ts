@@ -1,7 +1,6 @@
 import { prismaClient } from "../database/connectDB";
 import { ResponseError } from "../helper/errorInstance";
 import { BodyAdmin } from "../model/admin";
-import { ResponseGrooming, returnResponseGrooming } from "../model/grooming";
 import { AdminValidate } from "../validators/admin";
 import { Validator } from "../validators/validate";
 import bcrypt from "bcrypt";
@@ -16,14 +15,13 @@ export class Admin {
                 username: validate.username
             }
         })
-
         if (checkUsername.length !== 0) {
             throw new ResponseError(400, "Username already exist!")
         }
 
         validate.password = await bcrypt.hash(validate.password, 10);
 
-        const response = await prismaClient.admin.create({
+        const _ = await prismaClient.admin.create({
             data: validate
         })
 
@@ -38,7 +36,6 @@ export class Admin {
                 username: validate.username
             }
         })
-
         if (!user) {
             throw new ResponseError(401, "Username or password is wrong!")
         }
@@ -49,17 +46,6 @@ export class Admin {
         }
 
         return "Login success!"
-    }
-
-    static async grooming(): Promise<ResponseGrooming[]> {
-        const dataGrooming = await prismaClient.grooming.findMany()
-
-        let list: any[] = []
-        dataGrooming.forEach(data => {
-            list.push([data.owner, data.name, data.groomingType, data.date, data.queue])
-        })
-        
-        return returnResponseGrooming(list)
     }
 
 }

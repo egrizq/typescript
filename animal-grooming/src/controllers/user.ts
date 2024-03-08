@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { User } from "../service/user";
 import { AddAnimal, RequestUser } from "../model/user";
-import { RequestGrooming, responseGrooming } from '../model/grooming';
+import { RequestGrooming } from '../model/grooming';
 import { Grooming } from "../service/grooming";
 
 export class UserController {

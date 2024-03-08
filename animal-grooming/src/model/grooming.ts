@@ -18,18 +18,6 @@ export type ResponseGrooming = {
     owner: string;
     name: string;
     groomingType: string
-    date: string;
+    date: Date;
     queue: number;
-}
-
-export function returnResponseGrooming(data: any[][]) {
-    const response = data.map(insert => ({
-        owner: insert[0],
-        name: insert[1],
-        groomingType: insert[2],
-        date: insert[3],
-        queue: insert[4]
-    }))
-
-    return response
 }

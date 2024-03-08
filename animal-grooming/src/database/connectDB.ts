@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client"
+import { ResponseError } from "../helper/errorInstance";
 
 export const prismaClient = new PrismaClient({
     errorFormat: "pretty",
@@ -10,7 +11,7 @@ async function CheckConnection() {
         await prismaClient.$connect();
         console.log("Database is connected!");
     } catch (error) {
-        console.log("Connection to database is failed");
+        throw new ResponseError(400, `Connection to database is failed: ${error}`);
     }
 }
 

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { BodyAdmin } from "../model/admin";
 import { Admin } from "../service/admin";
-import { secret } from "../helper/config";
+import { secretKey } from "../helper/config";
 import jwt from "jsonwebtoken";
 
 export class AdminController {
@@ -22,13 +22,11 @@ export class AdminController {
         try {
             const requestAdmin: BodyAdmin = req.body as BodyAdmin
             const response = await Admin.login(requestAdmin)
-            
             const jwtToken = jwt.sign(
                 { admin: "admin" },
-                secret!,
+                secretKey!,
             ) 
             res.cookie('jwt', jwtToken, {httpOnly:true})
-            
             res.status(200).send({ 
                 status: response 
             });

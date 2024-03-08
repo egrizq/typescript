@@ -3,7 +3,7 @@ import { ResponseError } from './errorInstance';
 
 dotenv.config({ path: '../.env'  });
 
-export const secret = process.env.JWT_SECRET
-if (!secret) {
+export const secretKey = process.env.JWT_SECRET
+if (!secretKey) {
     throw new ResponseError(404, "Secret key is missing")
 }

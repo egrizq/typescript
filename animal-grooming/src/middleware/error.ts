@@ -1,8 +1,8 @@
-import { NextFunction, Request, Response, json } from "express";
+import { NextFunction, Request, Response } from "express";
 import { ZodError } from "zod";
 import { ResponseError } from "../helper/errorInstance";
 
-export const errorMiddleware = (error: Error, req: Request, res: Response, next: NextFunction) => {
+export const catchError = (error: Error, req: Request, res: Response, next: NextFunction) => {
     if (error instanceof ZodError) {
         res.status(400).json({
             error: `Validation error: ${error.message}`
