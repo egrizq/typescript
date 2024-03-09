@@ -10,7 +10,12 @@ export const AuthMiddleware = (req: Request, res: Response, next: NextFunction) 
     }
 
     try {
-        jwt.verify(token, secretKey!);
+        jwt.verify(token, secretKey!, (err: any, decoded: any) => {
+            if (err) {
+                throw new ResponseError(400, "missing token")
+            }
+            res.locals.admin = decoded.admin
+        });
         next();
     } catch (error) {
         throw new ResponseError(400, `Token is invalid`)

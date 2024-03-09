@@ -12,4 +12,5 @@ routerUserAndGrooming.post("/user/register/animal", UserController.registerNewAn
 routerUserAndGrooming.post("/user/register/grooming", UserController.registerGrooming);
 
 // grooming section
-routerUserAndGrooming.get("/grooming/data", GroomingController.groomingData);
+routerUserAndGrooming.get("/grooming/data/", GroomingController.groomingData);
+routerUserAndGrooming.delete("/grooming/finish/:owner/:name", GroomingController.finishedGrooming);

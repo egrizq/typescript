@@ -117,6 +117,7 @@ request body:
 {
     "username": "admin",
     "password": "secret",
+    "email": "admin@example.com"
 }
 ```
 
@@ -193,3 +194,21 @@ response body(success):
     }
     ]
 }
+
+### delete finished grooming data
+endpoint: DELETE /grooming/finish/:owner/:name
+
+response body(success):
+```json
+{
+    "owner": "rizq",
+    "name": "snowbell",
+}
+```
+
+response body(failed):
+```json
+{
+    "error": "owner or name is not found!"
+}
+```

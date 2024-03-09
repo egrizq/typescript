@@ -21,3 +21,16 @@ export type ResponseGrooming = {
     date: Date;
     queue: number;
 }
+
+export type finishGrooming = {
+    id?: number
+    owner: string;
+    name: string;
+}
+
+export function ResponseFinishedGrooming(data: finishGrooming): finishGrooming {
+    return {
+        owner: data.owner,
+        name: data.name
+    }
+}

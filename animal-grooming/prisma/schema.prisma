@@ -16,6 +16,7 @@ datasource db {
 model Admin {
     username String @id @db.VarChar(100)
     password String @db.VarChar(100)
+    email String @db.VarChar(100)
 
     @@map("admin")
 }

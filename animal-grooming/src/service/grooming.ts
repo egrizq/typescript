@@ -1,6 +1,6 @@
 import { prismaClient } from "../database/connectDB";
 import { ResponseError } from "../helper/errorInstance";
-import { RequestGrooming, ResponseGrooming, responseGrooming } from '../model/grooming';
+import { finishGrooming, RequestGrooming, ResponseFinishedGrooming, ResponseGrooming, responseGrooming } from '../model/grooming';
 import { GroomingValidate } from "../validators/grooming";
 import { Validator } from '../validators/validate';
 
@@ -37,7 +37,7 @@ export class Grooming {
         const newQueueNumber = lastQueueNumber + 1;
         
         if (validate.groomingType !== 'kutu' && validate.groomingType !== 'kombinasi') {
-            throw new ResponseError(400, "Grooming type is not matching!")
+            throw new ResponseError(400, "grooming type is not matching!")
         }
 
         const registerGrooming = await prismaClient.grooming.create({
@@ -64,8 +64,35 @@ export class Grooming {
                 queue: true
             }
         })
+        if (!dataGrooming) {
+            throw new ResponseError(404, "there's no queue in grooming")
+        }
 
         return dataGrooming
+    }
+
+    static async done(owner: string, name: string): Promise<finishGrooming> {
+        const findQueue = await prismaClient.grooming.findFirst({
+            where: {
+                owner: owner,
+                name: name
+            }, select: {
+                id: true,
+                name: true,
+                owner: true
+            }
+        })
+        if (!findQueue) {
+            throw new ResponseError(404, "owner or name is not found!")
+        }
+
+        const finishQueue = await prismaClient.grooming.delete({
+            where: {
+                id: findQueue!.id
+            }
+        })
+
+        return ResponseFinishedGrooming(findQueue)
     }
 
 }

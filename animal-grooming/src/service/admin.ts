@@ -1,14 +1,14 @@
 import { prismaClient } from "../database/connectDB";
 import { ResponseError } from "../helper/errorInstance";
-import { BodyAdmin } from "../model/admin";
+import { CreateAdmin, LoginAdmin } from "../model/admin";
 import { AdminValidate } from "../validators/admin";
 import { Validator } from "../validators/validate";
 import bcrypt from "bcrypt";
 
 export class Admin {
 
-    static async create(admin: BodyAdmin): Promise<string> {
-        const validate = Validator.request(AdminValidate.REQUEST, admin)
+    static async create(admin: CreateAdmin): Promise<string> {
+        const validate = Validator.request(AdminValidate.REGISTER, admin)
 
         const checkUsername = await prismaClient.admin.findMany({
             where: {
@@ -28,8 +28,8 @@ export class Admin {
         return "Account successfully created!"
     }
 
-    static async login(admin: BodyAdmin): Promise<string> {
-        const validate = Validator.request(AdminValidate.REQUEST, admin)
+    static async login(admin: LoginAdmin): Promise<string> {
+        const validate = Validator.request(AdminValidate.LOGIN, admin)
 
         let user = await prismaClient.admin.findUnique({
             where: {
