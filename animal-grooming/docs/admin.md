@@ -1,5 +1,3 @@
-## RESTful API Animal Grooming.
-
 ### register admin
 endpoint: POST /admin/create
 

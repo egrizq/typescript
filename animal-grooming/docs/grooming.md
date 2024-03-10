@@ -11,17 +11,18 @@ response body(success):
         "owner": "rizq",
         "name": "snowbell",
         "groomingType": "kutu",
-        "date": "2024-03-07T03:05:25.109Z",
+        "date": "3/10/2024, 11:58:56",
         "queue": 1
     }, {
         "owner": "syra",
         "name": "groot",
         "groomingType": "kombinasi",
-        "date": "2024-03-07T03:05:25.109Z",
+        "date": "3/10/2024, 12:00:51",
         "queue": 2
     }
     ]
 }
+```
 
 response body(failed):
 ```json

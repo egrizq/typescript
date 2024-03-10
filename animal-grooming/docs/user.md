@@ -1,5 +1,3 @@
-## RESTful API Animal Grooming.
-
 ### Register user & animal.
 endpoint: POST /user/register
 
