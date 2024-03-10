@@ -14,7 +14,6 @@ export class User {
                 owner: validate.owner
             }
         })
-
         if (checkOwner.length !== 0) {
             throw new ResponseError(400, "Owner already exist!")
         }
@@ -49,12 +48,11 @@ export class User {
                 owner: validate.owner
             }
         })
-
         if (!checkOwner) {
             throw new ResponseError(400, "Owner is not found");
         }
 
-        const addAnimal = await prismaClient.animal.create({
+        await prismaClient.animal.create({
             data: {
                 name: validate.name,
                 age: validate.age,
@@ -65,6 +63,26 @@ export class User {
         })
 
         return returnAnimal(validate)
+    }
+
+    static async data(): Promise<RequestUser[]> {
+        const allData = await prismaClient.user.findMany({
+            include: {
+                animals: {
+                    select: {
+                        name: true,
+                        age: true,
+                        color: true, 
+                        kind: true
+                    }
+                }
+            }
+        })
+        if (!allData) {
+            throw new ResponseError(404, "there's no data in record")
+        }
+
+        return allData
     }
 
 }

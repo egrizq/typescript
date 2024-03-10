@@ -41,7 +41,7 @@ response body(failed):
 ```
 
 ### register new animal.
-endpoint: POST /user/register/animal
+endpoint: PATCH /user/register/animal
 
 request: jwt-token
 
@@ -109,69 +109,8 @@ response body(failed):
 }
 ```
 
-### register admin
-endpoint: POST /admin/create
-
-request body:
-```json
-{
-    "username": "admin",
-    "password": "secret",
-    "email": "admin@example.com"
-}
-```
-
-response body(success):
-```json
-{
-    "status": "Account successfully created!"
-}
-```
-
-response body(failed):
-```json
-{
-    "status": "Username already exist!"
-}
-```
-
-### login admin
-endpoint: POST /admin/login
-
-request body:
-```json
-{
-    "username": "admin",
-    "password": "secret",
-}
-```
-
-response body(success):
-```json
-{
-    "status": "Login success!"
-}
-```
-
-response body(failed):
-```json
-{
-    "status": "Username or password is wrong!"
-}
-```
-
-### logout admin
-endpoint: GET /admin/logout
-
-response body(success):
-```json
-{
-    "status": "Success logout!"
-}
-```
-
-### get grooming data
-endpoint: GET /grooming/data
+### get all data
+endpoint: GET /user/data
 
 request: jwt-token
 
@@ -179,36 +118,28 @@ response body(success):
 ```json
 {
     "data": [
-    {
-        "owner": "rizq",
-        "name": "snowbell",
-        "groomingType": "kutu",
-        "date": "2024-03-07T03:05:25.109Z",
-        "queue": 1
-    }, {
-        "owner": "syra",
-        "name": "groot",
-        "groomingType": "kombinasi",
-        "date": "2024-03-07T03:05:25.109Z",
-        "queue": 2
-    }
+        {
+            "user_id": 1,
+            "owner": "rizq",
+            "phone": "081122",
+            "address": "jkt",
+            "animals": [
+                {
+                    "name": "snowbell",
+                    "age": "2",
+                    "color": "white",
+                    "kind": "cat"
+                }
+            ]
+        }
     ]
-}
-
-### delete finished grooming data
-endpoint: DELETE /grooming/finish/:owner/:name
-
-response body(success):
-```json
-{
-    "owner": "rizq",
-    "name": "snowbell",
 }
 ```
 
 response body(failed):
 ```json
 {
-    "error": "owner or name is not found!"
+    "errors": "there's no data in record"
 }
 ```
+

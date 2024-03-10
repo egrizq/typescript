@@ -1,6 +1,7 @@
 import { prismaClient } from "../database/connectDB";
 import { ResponseError } from "../helper/errorInstance";
-import { finishGrooming, RequestGrooming, ResponseFinishedGrooming, ResponseGrooming, responseGrooming } from '../model/grooming';
+import { finishGrooming, RequestGrooming, 
+    ResponseFinishedGrooming, ResponseGrooming, responseGrooming } from '../model/grooming';
 import { GroomingValidate } from "../validators/grooming";
 import { Validator } from '../validators/validate';
 
@@ -40,12 +41,15 @@ export class Grooming {
             throw new ResponseError(400, "grooming type is not matching!")
         }
 
+        const currentDate = new Date().toLocaleString()
+        
         const registerGrooming = await prismaClient.grooming.create({
             data: {
                 user_id: checkOwner.user_id,
                 owner: validate.owner,
                 name: validate.name,
                 groomingType: validate.groomingType,
+                date: currentDate,
                 queue: newQueueNumber,
             }
         })
@@ -64,8 +68,8 @@ export class Grooming {
                 queue: true
             }
         })
-        if (!dataGrooming) {
-            throw new ResponseError(404, "there's no queue in grooming")
+        if (dataGrooming.length === 0) {
+            throw new ResponseError(404, "there's no queue in record")
         }
 
         return dataGrooming
@@ -86,7 +90,7 @@ export class Grooming {
             throw new ResponseError(404, "owner or name is not found!")
         }
 
-        const finishQueue = await prismaClient.grooming.delete({
+        await prismaClient.grooming.delete({
             where: {
                 id: findQueue!.id
             }

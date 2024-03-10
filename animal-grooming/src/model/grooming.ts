@@ -18,7 +18,7 @@ export type ResponseGrooming = {
     owner: string;
     name: string;
     groomingType: string
-    date: Date;
+    date: string;
     queue: number;
 }
 

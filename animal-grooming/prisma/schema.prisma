@@ -51,7 +51,7 @@ model Grooming {
     owner String @db.VarChar(100)
     name String @db.VarChar(100)
     groomingType String @db.VarChar(100)
-    date DateTime @default(now())
+    date String @db.VarChar(100)
     queue Int
     
     user_id Int 

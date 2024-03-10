@@ -21,7 +21,7 @@ export class Admin {
 
         validate.password = await bcrypt.hash(validate.password, 10);
 
-        const _ = await prismaClient.admin.create({
+        await prismaClient.admin.create({
             data: validate
         })
 
