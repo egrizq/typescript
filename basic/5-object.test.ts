@@ -39,3 +39,35 @@ describe("object initialization", () => {
         expect(result).toHaveProperty("kind")
     })
 })
+
+describe('object and array manipulation', () => { 
+    interface Saving {
+        name: string;
+        money: number;
+    }
+
+    let savingData: Saving[] = []
+
+    it("should add data to savingData", () => {
+        const syraSaving: Saving = {
+            name: "syra",
+            money: 12000
+        }
+        savingData.push(syraSaving)
+
+        expect(savingData.length).toEqual(1)
+        expect(typeof savingData).toMatchObject<Saving>
+        expect(savingData[0]).toEqual({name: "syra", money: 12000})
+        expect(savingData.map(item => item.name)).toEqual(["syra"])
+    })
+
+    it("should manipulate data from savingData", () => {
+        expect(savingData[0]["money"] = 15000 ).toEqual(15000)
+    })
+
+    it("should delete data from savingData", () => {
+        savingData = savingData.filter(item => item.name !== "syra")
+
+        expect(savingData.length).toEqual(0)
+    })
+})
