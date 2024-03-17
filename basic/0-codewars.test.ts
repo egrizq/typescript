@@ -12,4 +12,15 @@ describe('string reverse words', () => {
         expect(reverseWords("This is an example!")).toEqual("sihT si na !elpmaxe")
         expect(reverseWords("double  spaces")).toEqual("elbuod  secaps")
     })
+})  
+
+describe('Remove First and Last Character', () => {
+    function removeChar(str:string): string {
+        return str.slice(1, -1)
+    }
+
+    it("should be able to remove first and last char", () => {
+        expect(removeChar("hello")).toBe("ell")
+        expect(removeChar("remove")).toBe("emov")
+    })
 })

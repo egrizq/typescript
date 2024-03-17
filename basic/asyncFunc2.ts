@@ -10,7 +10,6 @@ class Data {
             console.log(error)
         }
     }
-
 }
 
 const createSnowbell: {data: CreateAnimal} = {
